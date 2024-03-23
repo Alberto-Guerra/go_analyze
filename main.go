@@ -10,12 +10,6 @@ import (
 )
 
 
-func check(e error) {
-    if e != nil {
-        panic(e)
-    }
-}
-
 func getDocument(text string) *prose.Document {
 	doc, err := prose.NewDocument(text, prose.WithExtraction(false))
 	if err != nil {
@@ -120,7 +114,10 @@ func main() {
 
 	filepath := os.Args[1]
 	dat, err := os.ReadFile(filepath)
-	check(err)
+	if err != nil {
+		fmt.Println("Error reading file...")
+		os.Exit(0)
+	}
 	text := string(dat)
 
 	for  {
